@@ -8,12 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.geogeeks.lugaresbogota.model.Rank;
-import com.isispl.sismos_geogeeks.model.Sismo;
+
 
 import java.util.List;
 
 
-public class RankAdapter extends ArrayAdapter<Sismo> {
+public class RankAdapter extends ArrayAdapter<Rank> {
 
     private Context context;
     private List<Rank> rankList;
@@ -33,7 +33,7 @@ public class RankAdapter extends ArrayAdapter<Sismo> {
         View view = inflater.inflate(R.layout.row_item, parent, false);
 
         // Display Sismo name
-        Sismo sismo = sismoList.get(position);
+        Rank rank = rankList.get(position);
 
         TextView tv_item = (TextView)view.findViewById(R.id.row_item_txt1);
         TextView tv_item1 = (TextView)view.findViewById(R.id.row_item_txt2);
@@ -41,11 +41,11 @@ public class RankAdapter extends ArrayAdapter<Sismo> {
         TextView tv_item3 = (TextView)view.findViewById(R.id.row_item_txt4);
         TextView tv_item4 = (TextView)view.findViewById(R.id.row_item_txt5);
 
-        tv_item.setText("Fecha: " + sismo.getFecha());
-        tv_item1.setText("Magnitud: " + sismo.getMagnitud());
-        tv_item2.setText("Profundidad: "+ sismo.getProfundidad());
-        tv_item3.setText("Ubicación: Latitud:" + sismo.getLatitud()+" Longitud" + sismo.getLongitud());
-        tv_item4.setText("Descripción: "+ sismo.getDescripcion());
+        tv_item.setText("Fecha: " + rank.getFecha());
+        tv_item1.setText("Magnitud: " + rank.getMagnitud());
+        tv_item2.setText("Profundidad: "+ rank.getProfundidad());
+        tv_item3.setText("Ubicación: Latitud:" + rank.getLatitud()+" Longitud" + rank.getLongitud());
+        tv_item4.setText("Descripción: "+ rank.getDescripcion());
         //Display image
         //ImageView img = (ImageView)view.findViewById(R.id.row_item_img);
         //img.setImageBitmap(sismo.getBitmap());

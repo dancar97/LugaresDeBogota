@@ -16,8 +16,8 @@ import android.widget.Toast;
 
 import com.geogeeks.lugaresbogota.model.Rank;
 
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
+//import org.apache.http.params.HttpConnectionParams;
+//import org.apache.http.params.HttpParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,9 +132,9 @@ public class RankingList extends ListActivity {
         protected List<Rank> doInBackground(String... params) {
 
             String content = HttpManager.getData(params[0]);
-            sismoList = SismoJSONParser.parseFeed(content);
+            rankList = rankJSONparser.parseFeed(content);
 
-            for(Sismo sismo : sismoList){
+            for(Rank rank : rankList){
                 try{
                    /*String imgURL = PHOTO_BASE_URL + sismo.getPhoto();
                     InputStream in = (InputStream)new URL(imgURL).getContent();
@@ -147,12 +147,12 @@ public class RankingList extends ListActivity {
 
                 }
             }
-            return sismoList;
+            return rankList;
 
         }
 
         @Override
-        protected void onPostExecute(List<Sismo> result) {
+        protected void onPostExecute(List<Rank> result) {
 
             // PointList = SismoJSONParser.parseFeed(result);
 
