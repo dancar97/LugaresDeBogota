@@ -3,13 +3,17 @@ package com.geogeeks.lugaresbogota;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,6 +23,7 @@ import com.geogeeks.lugaresbogota.model.Rank;
 //import org.apache.http.params.HttpConnectionParams;
 //import org.apache.http.params.HttpParams;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +40,7 @@ public class RankingList extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.rank_list);
 
         listaClick = (ListView) findViewById(android.R.id.list);
 
@@ -45,7 +50,7 @@ public class RankingList extends ListActivity {
         pb.setVisibility(View.INVISIBLE);
 
         tasks = new ArrayList<>();
-        requestData("https://srvags.sgc.gov.co/VolcanesSGCJson/Volcanes/sismos/events.json");
+        requestData("http://geoapps.esri.co/AdminAppLugaresBogotaPHP/get.php");
         /*listaClick.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -72,7 +77,7 @@ public class RankingList extends ListActivity {
             public void onClick(View v) {
 
                 if (isOnline()) {
-                    requestData("https://srvags.sgc.gov.co/VolcanesSGCJson/Volcanes/sismos/events.json");
+                    requestData("http://geoapps.esri.co/AdminAppLugaresBogotaPHP/get.php");
                 } else {
                     Toast.makeText(RankingList.this, "Network is not Available", Toast.LENGTH_SHORT).show();
                 }
@@ -133,6 +138,8 @@ public class RankingList extends ListActivity {
 
             String content = HttpManager.getData(params[0]);
             rankList = rankJSONparser.parseFeed(content);
+
+
 
             for(Rank rank : rankList){
                 try{

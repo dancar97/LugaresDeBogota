@@ -36,8 +36,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="185dp"
-                android:layout_height="127dp"
+                android:layout_width="162dp"
+                android:layout_height="133dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -47,11 +47,11 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="191dp"
-                android:layout_height="74dp"
+                android:layout_width="178dp"
+                android:layout_height="71dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
-                android:scrollbars = "vertical"
+                android:scrollbars="vertical"
                 android:text="Toca un punto"
                 android:textSize="18dp"
                 app:layout_constraintStart_toStartOf="parent"

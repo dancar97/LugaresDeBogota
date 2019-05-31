@@ -22,6 +22,18 @@
 
         </activity>
 
+        <activity android:name=".PantallaDeAgradecimiento">
+
+
+
+        </activity>
+
+        <activity android:name=".RankingList">
+
+
+
+        </activity>
+
         <activity android:name=".LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

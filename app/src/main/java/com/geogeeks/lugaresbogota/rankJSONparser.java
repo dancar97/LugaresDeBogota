@@ -19,13 +19,11 @@ public class rankJSONparser {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Rank rank = new Rank();
 
-                rank.setMagnitud(jsonObject.getString("mag"));
-                rank.setProfundidad(jsonObject.getString("depth"));
-                rank.setLatitud(jsonObject.getString("latitude1"));
-                rank.setLongitud(jsonObject.getString("longitude1"));
-                rank.setDescripcion(jsonObject.getString("description"));
-                rank.setFecha(jsonObject.getString("time_UTC"));
-                rank.setMapa(jsonObject.getString("mapURL"));
+                rank.setMagnitud(jsonObject.getString("correo"));
+                rank.setProfundidad(jsonObject.getString("avg"));
+               // rank.setLatitud(jsonObject.getString("foto"));
+                //rank.setLongitud(jsonObject.getString("long"));
+
 
                 rankList.add(rank);
             }

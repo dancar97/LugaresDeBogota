@@ -17,6 +17,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -72,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private static String longitudFinal;
     private static String latitudFinal;
     private static String NOMBRE;
-
+    private static String FOTO;
+    private Button but2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +87,14 @@ public class MainActivity extends AppCompatActivity {
         // create an ArcGISMap with BasemapType topo
         final ArcGISMap map = new ArcGISMap(Basemap.Type.TOPOGRAPHIC, 4.6097102, -74.081749, 12);
         // set the ArcGISMap to the MapView
-        mServiceFeatureTable = new ServiceFeatureTable("https://services.arcgis.com/8DAUcrpQcpyLMznu/arcgis/rest/services/Cafes_y_Restaurantes_Tematicos_en_Bogota_WFL1/FeatureServer/0");
-        mServiceFeatureTable0 = new ServiceFeatureTable("https://services.arcgis.com/8DAUcrpQcpyLMznu/arcgis/rest/services/Cafes_y_Restaurantes_Tematicos_en_Bogota_WFL1/FeatureServer/1");
+        mServiceFeatureTable = new ServiceFeatureTable("https://services.arcgis.com/8DAUcrpQcpyLMznu/arcgis/rest/services/Comida_Tematica_Bogota_WFL1/FeatureServer/0");
         final FeatureLayer featureLayer = new FeatureLayer(mServiceFeatureTable);
-        final FeatureLayer featureLayer0 = new FeatureLayer(mServiceFeatureTable0);
+
         map.getOperationalLayers().add(featureLayer);
+        but2 = (Button) findViewById(R.id.button2);
+        but2.setEnabled(false);
 
 
-        map.getOperationalLayers().add(featureLayer0);
         mMapView.setMap(map);
         textoNombre = (TextView) findViewById(R.id.textView);
         textoNombre.setMovementMethod(new ScrollingMovementMethod());
@@ -197,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                                                    calloutContent.setVerticalScrollBarEnabled(true);
                                                    calloutContent.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
                                                    calloutContent.setMovementMethod(new ScrollingMovementMethod());
-                                                   calloutContent.setLines(5);
+                                                   calloutContent.setLines(6);
                                                    // cycle through selections
                                                    int counter = 0;
                                                    Feature feature;
@@ -211,24 +213,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                                   /* if(!attr.get("foto").equals(null)){
+                                    if(!attr.get("foto").equals(null)){
                                     new DownloadImageTask((ImageView) findViewById(R.id.imageView))
                                             .execute((String) attr.get("foto"));
 
-                                    }*/
+                                    }
                                                            //calloutContent.append(""key + " | " + attr.get("nombre") + "\n");
                                                            textoNombre.setText((String) attr.get("nombre"));
                                                            textoNombre.scrollTo(0,0);
 
 
                                                        calloutContent.append("Nombre "+ " : " + attr.get("nombre") + "\n"+
-                                                               "Direccion  "+ " : " + attr.get("Match_addr") + "\n"+
+                                                               "Tipo  "+ " : " + attr.get("Tipo") + "\n"+
+                                                               "Direccion  "+ " : " + attr.get("direccion") + "\n"+
                                                                "Horario  "+ " : " + attr.get("Horario") + "\n");
 
 
                                                        longitudFinal = attr.get("X")+"";
                                                        latitudFinal =attr.get("Y")+"";
                                                        NOMBRE = attr.get("nombre")+"";
+                                                       FOTO = attr.get("foto")+"";
+
                                                        counter++;
                                                        // center the mapview on selected feature
                                                        Envelope envelope = feature.getGeometry().getExtent();
@@ -237,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
                                                        mCallout.setLocation(clickPoint);
                                                        mCallout.setContent(calloutContent);
                                                        mCallout.show();
+                                                       but2.setEnabled(true);
                                                    }
                                                } catch (Exception e) {
                                                    Log.e(getResources().getString(R.string.app_name), "Select feature failed: " + e.getMessage());
@@ -318,24 +324,62 @@ public class MainActivity extends AppCompatActivity {
         mMapView.dispose();
     }
 
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        Intent intent = new Intent(MainActivity.this, LauncherActivity.class);
+        startActivity(intent);
+    }
+
 
 
 
     public void onClickCalf(View v)
     {
-        Toast.makeText(this, "Clicked on Button", Toast.LENGTH_LONG).show();
+
         Intent myIntent = new Intent(MainActivity.this, RankPageActivity.class);
         myIntent.putExtra("name", NOMBRE);
         myIntent.putExtra("lat", latitudFinal);
         myIntent.putExtra("lon", longitudFinal);
+        myIntent.putExtra("foto", FOTO);
         MainActivity.this.startActivity(myIntent);
 
     }
+
+
+
+
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
+        }
+    }
+
+    public class DownloadImageTask1 extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask1(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
